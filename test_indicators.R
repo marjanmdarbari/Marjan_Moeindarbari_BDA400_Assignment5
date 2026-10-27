@@ -1,0 +1,13 @@
+# Run from the assignment folder in RStudio.
+for (script in c("sma.R", "ema.R", "macd.R", "stdev.R", "linreg.R", "rsi.R", "stoch_rsi.R", "crossover.R", "crossunder.R")) source(script)
+stopifnot(isTRUE(all.equal(sma(c(1,2,3,4), 2), c(1.5,2.5,3.5))))
+stopifnot(isTRUE(all.equal(ema(c(10,12,14), 3), c(10,11,12.5))))
+stopifnot(isTRUE(all.equal(stdev(c(1,2,3)), sqrt(2/3))))
+stopifnot(isTRUE(all.equal(linreg(c(2,4,6,8), 3, 0)$slope, 2)))
+stopifnot(length(rsi(seq(1,30), 14)) == 30)
+stopifnot(all(rsi(seq(1,30), 14)[15:30] == 100))
+stopifnot(length(macd(1:30, 3, 5, 2)$histogram) == 30)
+stopifnot(length(stoch_rsi(cumsum(rep(c(2,-1,3,-2,1), 12)), 5, 3, 3)$d_line) > 0)
+stopifnot(identical(crossover(c(1,2,0), c(1.5,1.5,1.5)), c("None", "Up", "Down")))
+stopifnot(identical(crossunder(c(2,1), c(1.5,1.5)), c(FALSE, TRUE)))
+cat("All sample checks passed.\n")
